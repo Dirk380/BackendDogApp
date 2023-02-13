@@ -9,4 +9,6 @@ import java.util.*;
 @Repository
 public interface DogRepository extends JpaRepository <Dog, Long> {
     Dog findAllByDogRace (Dog dog);
+
+    Boolean existsDogByDogId (Long dogId);
 }

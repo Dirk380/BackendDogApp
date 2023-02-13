@@ -1,6 +1,7 @@
 package com.example.dogapplication.Controller;
 
 import com.example.dogapplication.Model.*;
+import com.example.dogapplication.Repository.DogRepository;
 import com.example.dogapplication.Service.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.*;
@@ -21,6 +22,9 @@ public class DogController {
     @Autowired
     private DogServiceImplement dogServiceImplement;
 
+    @Autowired
+    private DogRepository dogRepository;
+
     public DogController(DogServiceImplement dogServiceImplement) {
         this.dogServiceImplement = dogServiceImplement;
     }
@@ -32,6 +36,11 @@ public class DogController {
     public List<Dog> getDogs(){
        return dogServiceImplement.getAllDogs();
    }
+
+    @GetMapping("/check/{dogId}")
+    public  boolean dogExist(@PathVariable Long dogId ){
+        return dogRepository.existsDogByDogId(dogId);
+    }
 
    @PostMapping("/add")
     public ResponseEntity<String> addDog(@RequestBody Dog dog){
