@@ -1,0 +1,25 @@
+version: '3.1'
+
+services:
+    postgresDatabase:
+      image: postgres:latest
+#      restart: never
+      environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgrespw
+        - POSTGRES_DB=Dogs
+      ports:
+        - '5432:5432'
+      expose:
+        - '5432'
+      volumes:
+        - ./postgres-data:/var/lib/postgresql/data
+
+    dog-application:
+      image: dirk380/dog-application
+      environment:
+        - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresDatabase:5432/postgres
+      ports:
+        - '9090:9090'
+      depends_on:
+        - postgresDatabase

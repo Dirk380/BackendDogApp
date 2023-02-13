@@ -1,0 +1,1 @@
+The idea of this application is to create a central place where shelters can post their dogs. People can come to this site to see the shelter dogs in their area and connect with the shelter. This will increase the reach of each shelter and hopefully will increase the chance of people adopting dogs.
