@@ -37,9 +37,14 @@ public class DogController {
        return dogServiceImplement.getAllDogs();
    }
 
-    @GetMapping("/check/{dogId}")
+    @GetMapping("/checkId/{dogId}")
     public  boolean dogExist(@PathVariable Long dogId ){
         return dogRepository.existsDogByDogId(dogId);
+    }
+
+    @GetMapping("/checkName/{dogName}")
+    public  boolean checkDogName(@PathVariable String dogName ){
+        return dogRepository.checkDogName(dogName);
     }
 
    @PostMapping("/add")

@@ -8,7 +8,14 @@ import java.util.*;
 
 @Repository
 public interface DogRepository extends JpaRepository <Dog, Long> {
-    Dog findAllByDogRace (Dog dog);
 
     Boolean existsDogByDogId (Long dogId);
+
+    @Query("" +
+    "SELECT CASE WHEN COUNT(s) > 0 THEN " +
+    "TRUE ELSE FALSE END " +
+    "FROM Dog s " +
+    "WHERE s.dogName = ?1"
+    )
+    Boolean checkDogName(String dogName);
 }
