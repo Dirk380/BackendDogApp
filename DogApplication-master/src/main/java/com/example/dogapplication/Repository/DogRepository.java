@@ -9,7 +9,7 @@ import java.util.*;
 @Repository
 public interface DogRepository extends JpaRepository <Dog, Long> {
 
-    Boolean existsDogByDogId (Long dogId);
+
 
     @Query("" +
     "SELECT CASE WHEN COUNT(s) > 0 THEN " +
