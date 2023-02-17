@@ -37,7 +37,6 @@ public class DogController {
        return dogServiceImplement.getAllDogs();
    }
 
-
     @GetMapping("/checkName/{dogName}")
     public  boolean checkDogName(@PathVariable String dogName ){
         return dogRepository.checkDogName(dogName);
@@ -61,29 +60,9 @@ public class DogController {
         return dogServiceImplement.updateDog(dogId, dog);
     }
 
-    //update controller michiel
-//    @PutMapping("/{id}")
-//    public ResponseEntity<DjDto> updateDj(@PathVariable String id, @Valid @RequestBody DjUpdateDto djUpdateDto) throws DjNotFoundException, UuidNotValidException {
-//        DjDto djDto = mapper.toDto(djService.updateDj(id, djUpdateDto));
-//        return ResponseEntity.ok(djDto);
-//    }
-
-
-//update controller claudia
-//    @PutMapping({"/dj/update/{id}"})
-//    public DjDTO updateDj(@RequestBody Dj dj, @PathVariable Long id) {
-//        return convertEntityToDjDTO(this.djService.updateDj(dj, id));
-//    }
-
-
-
-
-
-
-
     @DeleteMapping("/delete/{dogId}")
     public ResponseEntity<?> deleteDog(@PathVariable Long dogId) {
-        dogServiceImplement.deleteDog(dogId);
+        dogServiceImplement.deleteDogById(dogId);
        return new ResponseEntity<>("Dog with id: " + dogId +" is deleted" , HttpStatus.OK);
     }
 

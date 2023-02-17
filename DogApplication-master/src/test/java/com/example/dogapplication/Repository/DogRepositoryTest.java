@@ -16,17 +16,19 @@ class DogRepositoryTest {
     @Test
     void itShouldCheckIfDogExistByName() {
         //given
-        String silas = "Silas";
+
         Dog dog = new Dog(1L,
-                silas,
+                "silas",
                 13 ,
                 "Malinous",
                 "Male",
                 "Brown");
+
+
         //when
         dogRepositoryTest.save(dog);
 
-        boolean exist = dogRepositoryTest.checkDogName(silas);
+        boolean exist = dogRepositoryTest.checkDogName(dog.getDogName());
         //then
         assertThat(exist).isTrue();
 

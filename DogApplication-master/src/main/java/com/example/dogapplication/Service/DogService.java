@@ -10,8 +10,11 @@ public interface DogService {
 
     Dog updateDog(Long dogId, Dog dog)throws IllegalArgumentException;
 
-    void  deleteDog(Long dogId);
+    void  deleteDogById(Long dogId);
     void deleteAllDogs();
+
+    void deleteDog(Dog dog);
+
     List<Dog> getAllDogs();
 
 }
