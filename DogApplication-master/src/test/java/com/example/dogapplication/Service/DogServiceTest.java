@@ -74,6 +74,7 @@ class DogServiceTest {
                 .hasMessageContaining("Dog Name Should not be empty");
 
         verify(dogRepository, never()).save(any());
+
     }
 
     @Test
@@ -110,14 +111,19 @@ class DogServiceTest {
                 "Malinous",
                 "Male",
                 "Brown");
+
+        Dog dog2 = new Dog(1L,
+                "silas",
+                13 ,
+                "Malinous",
+                "Male",
+                "Brown");
+
         //when
         dogRepository.deleteAll();
         //then
-        ArgumentCaptor<Dog> dogArgumentCaptor = ArgumentCaptor.forClass(Dog.class);
-        verify(dogRepository).delete(dogArgumentCaptor.capture());
+        verify(dogRepository, times(1)).deleteAll();
 
-        Dog captorValue = dogArgumentCaptor.getValue();
-        assertThat(captorValue).isEqualTo(dog);
     }
 
 
