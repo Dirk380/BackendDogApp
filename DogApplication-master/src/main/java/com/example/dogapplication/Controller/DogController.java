@@ -44,20 +44,14 @@ public class DogController {
 
    @PostMapping("/add")
     public ResponseEntity<String> addDog(@RequestBody Dog dog){
-       Dog newDog = dogServiceImplement.addDog(dog);
+       dogServiceImplement.addDog(dog);
        return new ResponseEntity<>("New Dog is added", HttpStatus.OK);
    }
 
-    @PutMapping("/{dogId}")
-    public ResponseEntity<Dog> updateDog(@PathVariable Long dogId, @Valid @RequestBody Dog dog) {
-        Dog testDog = dogServiceImplement.updateDog(dogId, dog);
-        return ResponseEntity.ok(testDog);
-    }
-
-    //update controller claudia
-    @PutMapping({"/update/{dogId}"})
-    public Dog updateDog2(@RequestBody Dog dog, @PathVariable Long dogId) {
-        return dogServiceImplement.updateDog(dogId, dog);
+    @PutMapping("/update")
+    public ResponseEntity<Dog> update(@RequestBody Dog dog) {
+        Dog updateDog = dogServiceImplement.updateDog(dog);
+        return ResponseEntity.ok(updateDog);
     }
 
     @DeleteMapping("/delete/{dogId}")
