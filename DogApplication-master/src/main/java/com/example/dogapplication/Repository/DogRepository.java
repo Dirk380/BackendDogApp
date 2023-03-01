@@ -18,4 +18,6 @@ public interface DogRepository extends JpaRepository <Dog, Long> {
     "WHERE s.dogName = ?1"
     )
     Boolean checkDogName(String dogName);
+
+
 }

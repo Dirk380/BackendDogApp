@@ -3,10 +3,10 @@ package com.example.dogapplication.Service;
 import com.example.dogapplication.Model.Dog;
 import com.example.dogapplication.Repository.DogRepository;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -20,13 +20,20 @@ import static org.mockito.Mockito.*;
 class DogServiceTest {
 
     @Mock
-    private DogRepository dogRepository;
+    private DogRepository dogRepositoryMock;
+    @InjectMocks
     private DogServiceImplement dogServiceTest;
 
 
     @BeforeEach
     void setUp() {
-        dogServiceTest = new DogServiceImplement(dogRepository);
+        dogServiceTest = new DogServiceImplement(dogRepositoryMock);
+        Dog dog = new Dog(1L,
+                "silas",
+                13,
+                "Malinous",
+                "Male",
+                "Brown");
     }
 
     @Test
@@ -34,7 +41,7 @@ class DogServiceTest {
         //when
         dogServiceTest.getAllDogs();
         //then
-        verify(dogRepository).findAll();
+        verify(dogRepositoryMock).findAll();
     }
 
     @Test
@@ -42,7 +49,7 @@ class DogServiceTest {
         //given
         Dog dog = new Dog(1L,
                 "silas",
-                13 ,
+                13,
                 "Malinous",
                 "Male",
                 "Brown");
@@ -51,10 +58,40 @@ class DogServiceTest {
         //then
         ArgumentCaptor<Dog> dogArgumentCaptor = ArgumentCaptor.forClass(Dog.class);
 
-        verify(dogRepository).save(dogArgumentCaptor.capture());
+        verify(dogRepositoryMock).save(dogArgumentCaptor.capture());
 
         Dog captorValue = dogArgumentCaptor.getValue();
         assertThat(captorValue).isEqualTo(dog);
+    }
+
+
+
+    @Test
+    void updateDog() {
+        //given
+        Dog dog = new Dog(1L,
+                "silas",
+                13,
+                "Malinous",
+                "Male",
+                "Brown");
+
+        Dog newDog = new Dog(1L,
+                "Kobus",
+                13,
+                "Boerboel",
+                "Male",
+                "Brown");
+
+        //when
+
+        dogServiceTest.updateDog(dog);
+        ArgumentCaptor<Dog> dogArgumentCaptor = ArgumentCaptor.forClass(Dog.class);
+        verify(dogRepositoryMock).save(dogArgumentCaptor.capture());
+
+        //then
+        Dog captorDog = dogArgumentCaptor.getValue();
+        assertThat(captorDog).isEqualTo(dog);
     }
 
 
@@ -64,22 +101,17 @@ class DogServiceTest {
         //given
         Dog dog = new Dog(1L,
                 null,
-                13 ,
+                13,
                 "Malinous",
                 "Male",
                 "Brown");
         //when
         //then
-        assertThatThrownBy(()->dogServiceTest.addDog(dog))
+        assertThatThrownBy(() -> dogServiceTest.addDog(dog))
                 .hasMessageContaining("Dog Name Should not be empty");
 
-        verify(dogRepository, never()).save(any());
+        verify(dogRepositoryMock, never()).save(any());
 
-    }
-
-    @Test
-    @Disabled
-    void updateDog() {
     }
 
 
@@ -88,7 +120,7 @@ class DogServiceTest {
         //given
         Dog dog = new Dog(1L,
                 "silas",
-                13 ,
+                13,
                 "Malinous",
                 "Male",
                 "Brown");
@@ -96,37 +128,42 @@ class DogServiceTest {
         dogServiceTest.deleteDog(dog);
         //then
         ArgumentCaptor<Dog> dogArgumentCaptor = ArgumentCaptor.forClass(Dog.class);
-        verify(dogRepository).delete(dogArgumentCaptor.capture());
+        verify(dogRepositoryMock).delete(dogArgumentCaptor.capture());
 
         Dog captorValue = dogArgumentCaptor.getValue();
         assertThat(captorValue).isEqualTo(dog);
     }
 
     @Test
-    void canDeleteAllDogs(){
+    void canDeleteAllDogs() {
         //given
         Dog dog = new Dog(1L,
                 "silas",
-                13 ,
+                13,
                 "Malinous",
                 "Male",
                 "Brown");
 
         Dog dog2 = new Dog(1L,
                 "silas",
-                13 ,
+                13,
                 "Malinous",
                 "Male",
                 "Brown");
-
         //when
-        dogRepository.deleteAll();
+        dogServiceTest.deleteAllDogs();
         //then
-        verify(dogRepository, times(1)).deleteAll();
-
+        verify(dogRepositoryMock, times(1)).deleteAll();
     }
 
+    @Test
+    void canDeleteById(){
+      Dog dog = new Dog();
+      dog.setDogId(1L);
 
+      dogServiceTest.deleteDogById(dog.getDogId());
+      verify(dogRepositoryMock, times(1)).deleteById(1L);
+    }
 
 
 }

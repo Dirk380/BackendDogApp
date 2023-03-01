@@ -22,30 +22,6 @@ public class DogServiceImplement implements DogService {
         return dogRepository.save(dog);
     }
 
-
-    @Override
-    public Dog updateDog(Long dogId, Dog dog) throws IllegalArgumentException {
-        Dog test = dogRepository.findById(dogId).orElseThrow(() -> new IllegalStateException("ID not found"));
-        if (dog == null) {
-            throw new IllegalArgumentException("dog cannot be null");
-        }
-        if (dog.getDogName() != null && !dog.getDogName().equals("")) {
-            test.setDogName(dog.getDogName());
-        }
-        if (dog.getDogColor() != null && !dog.getDogColor().equals("")) {
-            test.setDogColor(dog.getDogColor());
-        }
-        if (dog.getDogGender() != null && !dog.getDogGender().equals("")) {
-            test.setDogGender(dog.getDogGender());
-        }
-        if (dog.getDogRace() != null && !dog.getDogRace().equals("")) {
-            test.setDogRace(dog.getDogRace());
-        }
-        if (dog.getDogAge() >= 0 && dog.getDogAge() <= 30)
-            test.setDogAge(dog.getDogAge());
-        return dogRepository.save(test);
-    }
-
     @Override
     public void deleteDogById(Long dogId) {
         dogRepository.deleteById(dogId);
@@ -66,5 +42,12 @@ public class DogServiceImplement implements DogService {
     public List<Dog> getAllDogs() {
         return dogRepository.findAll();
     }
+
+    @Override
+    public Dog updateDog(Dog dog) {
+          return dogRepository.save(dog);
+    }
+
+
 
 }
